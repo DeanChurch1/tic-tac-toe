@@ -35,30 +35,48 @@ def next_block(the_file):
 
 
 def welcome(title):
-    print("\t\tWelcome to Trivia Challenge\n")
+    print("\t\tWelcome to the history Trivia Challenge\n")
     print("\t\t",title,"\n")
 
+
 def main():
-    main = open_file("test_file.txt","r")
-    title = next_line(the_file)
+    trivia_file = open_file("trivia.txt", "r")
+    title = next_line(trivia_file)
     welcome(title)
     score = 0
-    category,question,answers,correct,exp_line
-    next_block(the_file)
+
+    # get first block
+    category, question, answers, correct, explanation = next_block(trivia_file)
     while category:
+        # ask a question
         print(category)
         print(question)
         for i in range(4):
-            print(answers)
-    answer = input("What is your answer")
-    if answer == correct:
-        print("Congratulations")
-        score += 1
-    else:
-        print("incorrect")
-    print("explanation")
-    print("This is your score",score)
-    next_block(the_file)
+            print("\t", i + 1, "-", answers[i])
+
+        # get answer
+        answer = input("What's your answer?: ")
+
+        # check answer
+        if answer == correct:
+            print("\nRight!", end=" ")
+            score += 1
+        else:
+            print("\nWrong.", end=" ")
+        print(explanation)
+        print("Score:", score, "\n\n")
+
+        # get next block
+        category, question, answers, correct, explanation = next_block(trivia_file)
+
+    trivia_file.close()
+
+    print("That was the last question!")
+    print("You're final score is", score)
+ 
+main()  
+input("\n\nPress the enter key to exit.")
+
 
 
 
